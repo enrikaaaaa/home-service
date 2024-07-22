@@ -1,14 +1,6 @@
-import axios, { AxiosInstance } from "axios";
-
 import { API_URL } from "../../routes/consts";
 import { Key } from "react";
-
-const axiosInstance: AxiosInstance = axios.create({
-  baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import axiosInstance from "../../config/axios";
 
 interface Appointment {
   id: Key | null | undefined;
@@ -38,12 +30,14 @@ export const createAppointment = (userId: string, date: string, time: string) =>
     reserved: true,
   });
 
-  export const fetchAppointmentsByUserId = (userId: string) =>
-  axiosInstance.get(`/appointments/${userId}`).then((response) => response.data);
+export const fetchAppointmentsByUserId = (userId: string) =>
+  axiosInstance
+    .get(`/appointments/${userId}`)
+    .then((response) => response.data);
 
 export const fetchBookings = async (userId: string) => {
   try {
-    const response = await axios.get(`${API_URL}/appointments/${userId}`);
+    const response = await axiosInstance.get(`${API_URL}/appointments/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch bookings:", error);
