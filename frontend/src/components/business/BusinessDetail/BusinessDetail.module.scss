@@ -1,0 +1,98 @@
+.roundedImage {
+  border-radius: 50%;
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  background-color: #e5ddfb;
+  color: $primary-color;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  margin-bottom: 2rem;
+}
+
+.rightSideTop {
+  width: 50vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 2rem;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: grey;
+}
+.rightSideDescription {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 2rem;
+  gap: 1rem;
+}
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.intro {
+  margin: 1rem 7rem 1rem 7rem;
+  display: flex;
+}
+.leftSide {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+}
+.leftSideBusiness {
+  text-align: left;
+}
+.buttonIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+.longButton {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.gallery {
+  width: 20rem;
+  border-radius: 2rem;
+}
+.icon {
+  display: flex;
+  align-items: center;
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
+}

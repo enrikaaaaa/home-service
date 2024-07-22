@@ -1,0 +1,30 @@
+.CardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.Card {
+  flex: 1 1 100%;
+  max-width: calc(50% - 1.25rem);
+  margin-bottom: 1.25rem;
+}
+.title {
+  font-size: 1.25rem;
+  text-align: left;
+  padding-left: 2rem;
+}
+
+@media (min-width: 768px) {
+  .Card {
+    max-width: calc(33.33% - 1.25rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .Card {
+    max-width: calc(25% - 1.25rem);
+  }
+}

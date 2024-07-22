@@ -1,0 +1,47 @@
+.hero {
+  padding-top: 2rem;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    padding-top: 4rem;
+  }
+}
+
+.title {
+  font-size: 3.5rem;
+  line-height: 5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    line-height: 4rem;
+  }
+}
+
+.primary {
+  color: $primary-color;
+}
+
+.subtitle {
+  color: #a8a8a8;
+  font-size: 1.5rem;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+}
+
+.searchContainer {
+  display: flex;
+  margin: 2rem auto;
+  width: 80%;
+  max-width: 600px;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}

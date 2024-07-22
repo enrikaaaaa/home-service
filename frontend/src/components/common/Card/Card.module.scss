@@ -1,0 +1,41 @@
+.card {
+  width: 160px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #f2eefd;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  color: #9977ef;
+  font-weight: 500;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @media (min-width: 768px) {
+    width: 200px;
+    height: 240px;
+    font-size: 1.1rem;
+  }
+
+  .image {
+    height: 70%;
+    padding: 0.3125rem;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .text {
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+}

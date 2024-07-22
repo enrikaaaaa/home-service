@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["vite/client"],
+    "outDir": "./dist",
+  },
+  "include": ["src"]
+}

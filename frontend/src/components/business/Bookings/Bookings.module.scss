@@ -1,0 +1,70 @@
+.bookingsContainer {
+  padding: 20px;
+  width: 30rem;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.cardContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: box-shadow 0.3s;
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.imageContainer {
+  flex: 0 0 100px;
+  width: 200px;
+  height: 200px;
+  margin-right: 16px;
+}
+
+.image {
+  width: 200px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1rem;
+  div{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  img{
+    width: 20px;
+    height: 20px;
+  }
+  }
+}
+
+.chip {
+  background-color: #eee;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.name {
+  font-size: 18px;
+  margin: 0;
+}
+
+.contactPerson,
+.address {
+  font-size: 14px;
+  margin: 4px 0;
+}

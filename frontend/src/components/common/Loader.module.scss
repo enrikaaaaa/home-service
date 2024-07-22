@@ -1,0 +1,157 @@
+@keyframes animCircleOuter {
+  0% {
+    stroke-dashoffset: 25;
+  }
+  25% {
+    stroke-dashoffset: 0;
+  }
+  65% {
+    stroke-dashoffset: 301;
+  }
+  80% {
+    stroke-dashoffset: 276;
+  }
+  100% {
+    stroke-dashoffset: 276;
+  }
+}
+
+@keyframes animCircleMiddle {
+  0% {
+    stroke-dashoffset: 17;
+  }
+  25% {
+    stroke-dashoffset: 0;
+  }
+  65% {
+    stroke-dashoffset: 204;
+  }
+  80% {
+    stroke-dashoffset: 187;
+  }
+  100% {
+    stroke-dashoffset: 187;
+  }
+}
+
+@keyframes animCircleInner {
+  0% {
+    stroke-dashoffset: 9;
+  }
+  25% {
+    stroke-dashoffset: 0;
+  }
+  65% {
+    stroke-dashoffset: 106;
+  }
+  80% {
+    stroke-dashoffset: 97;
+  }
+  100% {
+    stroke-dashoffset: 97;
+  }
+}
+
+@keyframes animText {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  50% {
+    clip-path: inset(0);
+  }
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+.parentDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.styledDiv {
+  width: 64px;
+  height: 64px;
+  border-radius: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styledSVG {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styledSVGCircle {
+  position: absolute;
+  fill: none;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(-100deg);
+  transform-origin: center;
+}
+
+.styledSVGCircleOuter {
+  stroke-dasharray: 62.75 188.25;
+}
+
+.styledSVGCircleOuterBack {
+  animation: animCircleOuter 1.8s ease infinite 0.3s;
+}
+
+.styledSVGCircleOuterFront {
+  animation: animCircleOuter 1.8s ease infinite 0.15s;
+}
+
+.styledSVGCircleMiddle {
+  stroke-dasharray: 42.5 127.5;
+}
+
+.styledSVGCircleMiddleBack {
+  animation: animCircleMiddle 1.8s ease infinite 0.25s;
+}
+
+.styledSVGCircleMiddleFront {
+  animation: animCircleMiddle 1.8s ease infinite 0.1s;
+}
+
+.styledSVGCircleInner {
+  stroke-dasharray: 22 66;
+}
+
+.styledSVGCircleInnerBack {
+  animation: animCircleInner 1.8s ease infinite 0.2s;
+}
+
+.styledSVGCircleInnerFront {
+  animation: animCircleInner 1.8s ease infinite 0.05s;
+}
+
+.styledText {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  ::before {
+    content: attr(data-text);
+  }
+  ::after {
+    content: attr(data-text);
+    animation: animText 3.6s ease infinite;
+    position: absolute;
+  }
+}
