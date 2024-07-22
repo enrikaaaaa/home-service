@@ -2,7 +2,9 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 import { PROD } from "../consts/enviroment";
 
-const baseURL = PROD ? "https://newtoheroku-6bccabe253a0.herokuapp.com/" : "http://localhost:3000/";
+const baseURL = PROD
+  ? "https://home-service-5c48a62e4b89.herokuapp.com/"
+  : "http://localhost:3000/";
 
 const config: AxiosRequestConfig = {
   baseURL,
