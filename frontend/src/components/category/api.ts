@@ -1,5 +1,5 @@
 import { API_URL } from "../../routes/consts";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 
 export const fetchCategories = () =>
-  axios.get(`${API_URL}/categories`).then((response) => response.data);
+  axiosInstance.get(`${API_URL}/categories`).then((response) => response.data);
