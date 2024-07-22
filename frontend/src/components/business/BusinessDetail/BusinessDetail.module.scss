@@ -20,62 +20,73 @@
 }
 
 .rightSideTop {
-  width: 50vw;
+  width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin: 2rem;
+  justify-content: center;
+  margin: 2rem 0;
 }
+
 h1 {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 2rem;
-  text-align: left;
+  margin-bottom: 1rem;
+  text-align: center;
 }
+
 p {
   font-size: 1rem;
   font-weight: 400;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: grey;
+  text-align: center;
 }
+
 .rightSideDescription {
-  width: 50vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  margin: 2rem;
+  margin: 1rem 0;
   gap: 1rem;
 }
+
 .about {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  margin: 2rem;
+  margin: 1rem 0;
 }
 
 .intro {
-  margin: 1rem 7rem 1rem 7rem;
-  display: flex;
-}
-.leftSide {
-  width: 100vw;
+  margin: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+}
+
+.leftSide {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 10px;
 }
+
 .leftSideBusiness {
-  text-align: left;
+  text-align: center;
 }
+
 .buttonIcon {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
 }
+
 .longButton {
   width: 100%;
   display: flex;
@@ -84,15 +95,64 @@ p {
   justify-content: center;
   gap: 1rem;
 }
+
 .gallery {
-  width: 20rem;
+  width: 100%;
+  max-width: 20rem;
   border-radius: 2rem;
 }
+
 .icon {
   display: flex;
   align-items: center;
   img {
     width: 2rem;
     height: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .intro {
+    margin: 1rem 7rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .rightSideTop {
+    width: 50%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 2rem;
+  }
+
+  .rightSideDescription {
+    width: 50%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 2rem;
+  }
+
+  .about {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 2rem;
+  }
+
+  .leftSide {
+    width: 50%;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .leftSideBusiness {
+    text-align: left;
+  }
+
+  h1,
+  p {
+    text-align: left;
   }
 }
