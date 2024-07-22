@@ -14,7 +14,7 @@ const SearchInput = ({ onSearch }: SearchInputProps) => {
   const { searchTerm, setSearchTerm } = useContext(SearchContext)!;
   const [showDropdown, setShowDropdown] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const [searchTriggered, setSearchTriggered] = useState(false);
+  const [searchTriggered, setSearchTriggered] = useState<boolean>(false);
 
   React.useEffect(() => {
     if (debouncedSearchTerm) {
@@ -49,15 +49,19 @@ const SearchInput = ({ onSearch }: SearchInputProps) => {
       </Button>
       {showDropdown && (
         <div className={styles.dropdown}>
-          {["Result 1", "Result 2", "Result 3"].map((item, index) => (
-            <div
-              key={index}
-              className={styles.dropdownItem}
-              onClick={() => handleItemClick(item)}
-            >
-              {item}
+          {searchTerm && searchTerm[Symbol.iterator]() && (
+            <div className={styles.dropdown}>
+              {Array.from(searchTerm).map((item, index) => (
+                <div
+                  key={index}
+                  className={styles.dropdownItem}
+                  onClick={() => handleItemClick(item)}
+                >
+                  {item}
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       )}
     </div>

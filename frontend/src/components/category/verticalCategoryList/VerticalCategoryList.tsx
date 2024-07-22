@@ -9,12 +9,15 @@ const VerticalCategoryList = () => {
   return (
     <div>
       <h2 className={styles.title}>Categories</h2>
-      {categories?.map((category: { name: any; url?: string }) => (
-        <CategoryCard
-          key={category.name}
-          category={{ ...category, url: category.url || "" }}
-        />
-      ))}
+      <div className={styles.cardContainer}>
+        {categories?.map((category: { name: any; url?: string }) => (
+          <CategoryCard
+            key={category.name}
+            category={{ ...category, url: category.url || "" }}
+            className={styles.card}
+          />
+        ))}
+      </div>
     </div>
   );
 };
