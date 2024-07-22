@@ -5,13 +5,17 @@ interface IAppointment extends Document {
   date: string;
   time: string;
   reserved: boolean;
+  category: string;
+  services: string[];
 }
 
 const AppointmentSchema = new Schema({
-  userId: { type: String, required: false },
-  date: { type: String, required: false },
-  time: { type: String, required: false },
-  reserved: { type: Boolean, required: false },
+  userId: { type: String, required: true },
+  date: { type: String, required: true },
+  time: { type: String, required: true },
+  reserved: { type: Boolean, required: true },
+  category: { type: String, required: true },
+  services: { type: [String], required: true },
 });
 
 const Appointment = mongoose.model<IAppointment>(

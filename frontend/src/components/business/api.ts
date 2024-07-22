@@ -3,14 +3,13 @@ import { Key } from "react";
 import axiosInstance from "../../config/axios";
 
 interface Appointment {
-  id: Key | null | undefined;
   _id: string;
+  userId: string;
   date: string;
   time: string;
-  business: {
-    company: string;
-    address: string;
-  };
+  reserved: boolean;
+  category: string;
+  services: string[];
 }
 
 export const fetchBusinesses = () =>
@@ -22,13 +21,24 @@ export const addTime = (id: string, time: string) =>
 export const fetchBusinessById = (id: string) =>
   axiosInstance.get(`/services/${id}`).then((response) => response.data);
 
-export const createAppointment = (userId: string, date: string, time: string) =>
-  axiosInstance.post<Appointment>("/appointments", {
-    userId,
-    date,
-    time,
-    reserved: true,
-  });
+export const createAppointment = (
+  userId: string,
+  selectedDate: string,
+  selectedTime: string,
+  reserved: boolean,
+  category: string,
+  services: string[]
+) =>
+  axiosInstance
+    .post<Appointment>("/appointments", {
+      userId,
+      date: selectedDate,
+      time: selectedTime,
+      reserved,
+      category,
+      services,
+    })
+    .then((response) => response.data);
 
 export const fetchAppointmentsByUserId = (userId: string) =>
   axiosInstance
@@ -37,7 +47,9 @@ export const fetchAppointmentsByUserId = (userId: string) =>
 
 export const fetchBookings = async (userId: string) => {
   try {
-    const response = await axiosInstance.get(`${API_URL}/appointments/${userId}`);
+    const response = await axiosInstance.get(
+      `${API_URL}/appointments/${userId}`
+    );
     return response.data;
   } catch (error) {
     console.error("Failed to fetch bookings:", error);

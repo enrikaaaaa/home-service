@@ -78,13 +78,15 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { UserId, Date, services, reserved } = req.body;
+    const { userId, date, time, reserved, category, services } = req.body;
 
     const appointment = new Appointment({
-      UserId,
-      Date,
-      services,
+      userId,
+      date,
+      time,
       reserved,
+      category,
+      services,
     });
 
     await appointment.save();
@@ -94,5 +96,4 @@ router.post("/", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 export default router;
