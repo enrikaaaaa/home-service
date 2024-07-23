@@ -1,5 +1,5 @@
 import { API_URL } from "../../routes/consts";
-import { Key } from "react";
+import Business from "./types";
 import axiosInstance from "../../config/axios";
 
 interface Appointment {
@@ -60,3 +60,20 @@ export const fetchSimilarBusinesses = (category: string) =>
   axiosInstance
     .get(`/services/category/${category}`)
     .then((response) => response.data);
+
+export async function searchBusinesses(query: string): Promise<Appointment[]> {
+  try {
+    const response = await fetch(`/businesses?query=${query}`);
+    const data = await response.json();
+    // Ensure the data is an array
+    if (Array.isArray(data)) {
+      return data;
+    } else {
+      console.error("Invalid data format received from API:", data);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching data from API:", error);
+    return [];
+  }
+}

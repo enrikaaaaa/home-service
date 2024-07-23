@@ -51,7 +51,6 @@ const BusinessDetail = () => {
               src={business.img}
               alt={business.company}
             />
-
             <div className={styled.about}>
               <h2 className={styled.chip}>{business.category}</h2>
               <h1>{business.company}</h1>
@@ -59,7 +58,7 @@ const BusinessDetail = () => {
                 <img
                   src="https://img.icons8.com/?size=100&id=5bHmXpLDVtWf&format=png&color=787878"
                   alt="icon"
-                ></img>
+                />
                 {business.address}
               </p>
               <p>{business.email}</p>
@@ -88,13 +87,13 @@ const BusinessDetail = () => {
               src="https://img.icons8.com/?size=100&id=105543&format=png&color=ffffff"
               alt="Icon"
               className={styled.buttonIcon}
-            ></img>
+            />
           </Button>
           <div className={styled.icon}>
             <img
               src="https://img.icons8.com/?size=100&id=Cssf43cjx2fu&format=png&color=B80FA1"
               alt="icon"
-            ></img>
+            />
             {business.name} {business.lastName}
           </div>
           <p>available</p>
@@ -103,13 +102,16 @@ const BusinessDetail = () => {
               src="https://img.icons8.com/?size=100&id=bysMwFsPqzFF&format=png&color=ffffff"
               alt="icon"
               className={styled.buttonIcon}
-            ></img>
+            />
             Book Appointment
           </Button>
           <BusinessSidebarModal
             isOpen={isOpen}
             onClose={closeModal}
-            userId={""}
+            category={business.category}
+            services={business.services}
+            data-appointmentid={id}
+            appointmentId={""}
           />
           <div className={styled.leftSideBusiness}>
             <h2>Similar Business</h2>

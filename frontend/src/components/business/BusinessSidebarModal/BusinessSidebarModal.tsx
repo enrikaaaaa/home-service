@@ -1,12 +1,10 @@
 import { Box, Button, Chip, Drawer, Typography } from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
-import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
-import { UserContext } from "../../../context/UserContext";
 import { createAppointment } from "../api";
 import dayjs from "dayjs";
 import styles from "./BusinessSidebarModal.module.scss";
@@ -14,21 +12,28 @@ import styles from "./BusinessSidebarModal.module.scss";
 interface BusinessSidebarModalProps {
   isOpen: boolean;
   onClose: () => void;
-  userId: string;
+  appointmentId: string;
   category: string;
   services: string[];
 }
 
-const BusinessSidebarModal = ({
+const BusinessSidebarModal: FC<BusinessSidebarModalProps> = ({
   isOpen,
   onClose,
-  userId,
+  appointmentId,
   category,
   services,
-}: BusinessSidebarModalProps) => {
+}) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
-  const { user } = useContext(UserContext);
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const handleDateChange = (newDate: Dayjs | null) => {
     setSelectedDate(newDate);
@@ -37,7 +42,7 @@ const BusinessSidebarModal = ({
 
   const handleReserveTime = async () => {
     if (selectedDate && selectedTime) {
-      if (user) {
+      if (userId) {
         try {
           const createdAppointment = await createAppointment(
             userId,
@@ -53,6 +58,8 @@ const BusinessSidebarModal = ({
           console.error("Error creating appointment:", error);
           alert("Failed to create appointment.");
         }
+      } else {
+        alert("User not logged in.");
       }
     } else {
       alert("Please select both date and time!");
