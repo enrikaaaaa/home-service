@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import BusinessSidebarModal from "../BusinessSidebarModal/BusinessSidebarModal";
-import Button from "../../common/Button/Button";
 import { Link } from "react-router-dom";
 import styles from "./SmallBusinessCard.module.scss";
 
