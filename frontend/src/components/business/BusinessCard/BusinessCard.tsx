@@ -52,6 +52,8 @@ const BusinessCard = ({ business, onClick }: BusinessCardProps) => {
             isOpen={isOpen}
             onClose={closeModal}
             userId={""}
+            category={""}
+            services={[]}
           />
         </div>
       </div>
