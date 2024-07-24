@@ -1,4 +1,5 @@
 import {
+  createAppointment,
   fetchAppointmentsByUserId,
   fetchBookings,
   fetchBusinessById,
@@ -47,5 +48,12 @@ export const useAppointments = (userId: string) => {
     queryKey: [APPOINTMENTS_KEY, userId],
     queryFn: () => fetchAppointmentsByUserId(userId),
     enabled: !!userId,
+  });
+};
+
+export const useCreateAppointment = () => {
+  return useQuery({
+    queryKey: [APPOINTMENTS_KEY],
+    queryFn: () => createAppointment,
   });
 };

@@ -5,6 +5,9 @@ import { Types } from "mongoose";
 
 const router = express.Router();
 
+const app = express();
+app.use(express.json());
+
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -64,7 +67,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (_, res: Response) => {
   try {
     const appointments = await Appointment.find();
 
@@ -76,24 +79,25 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", async (req, res) => {
   try {
-    const { userId, date, time, reserved, category, services } = req.body;
+    const { userId, date, time, category, services } = req.body;
 
     const appointment = new Appointment({
       userId,
       date,
       time,
-      reserved,
       category,
       services,
     });
 
     await appointment.save();
+
     res.status(201).json(appointment);
   } catch (error) {
     console.error("Error creating appointment:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 export default router;

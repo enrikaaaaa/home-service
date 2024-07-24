@@ -1,7 +1,7 @@
 export default interface Appointment {
   id: string | null | undefined;
   title: string;
-  _id: string;
+  userId: string;
   date: string;
   time: string;
   business: {

@@ -1,9 +1,11 @@
+// BusinessDetail.tsx
 import React, { useMemo, useState } from "react";
 
 import BusinessSidebarModal from "../BusinessSidebarModal/BusinessSidebarModal";
 import Button from "../../common/Button/Button";
 import Loader from "../../common/Loader";
 import SimilarCategories from "../SimilarCategories/SimilarCategories";
+import { getUserIdFromLocalStorage } from "../../../components/utils/auth";
 import styled from "../BusinessDetail/BusinessDetail.module.scss";
 import { useBusinesses } from "../hooks";
 import { useParams } from "react-router-dom";
@@ -13,6 +15,10 @@ const BusinessDetail = () => {
   const { data: businesses, isLoading, error } = useBusinesses();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Retrieve the user ID from local storage
+  const userId = getUserIdFromLocalStorage();
+
+  // Find the business that matches the ID from the URL
   const business = useMemo(() => {
     return businesses?.find((business: { _id: string }) => business._id === id);
   }, [businesses, id]);
@@ -80,7 +86,6 @@ const BusinessDetail = () => {
             />
           </div>
         </div>
-
         <div className={styled.leftSide}>
           <Button small>
             <img
@@ -108,10 +113,9 @@ const BusinessDetail = () => {
           <BusinessSidebarModal
             isOpen={isOpen}
             onClose={closeModal}
-            category={business.category}
-            services={business.services}
-            data-appointmentid={id}
-            appointmentId={""}
+            userId={userId || ""}
+            category={""}
+            services={[]}
           />
           <div className={styled.leftSideBusiness}>
             <h2>Similar Business</h2>

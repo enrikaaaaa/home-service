@@ -1,140 +1,123 @@
-import { Box, Button, Chip, Drawer, Typography } from "@mui/material";
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { FC, useEffect, useState } from "react";
+import { Box, Button, Drawer, Snackbar, Typography } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import React, { useState } from "react";
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import DatePicker from "./DatePicker";
 import { Dayjs } from "dayjs";
-import { IoMdClose } from "react-icons/io";
+import TimePicker from "./TimePicker";
 import { createAppointment } from "../api";
-import dayjs from "dayjs";
-import styles from "./BusinessSidebarModal.module.scss";
 
 interface BusinessSidebarModalProps {
   isOpen: boolean;
   onClose: () => void;
-  appointmentId: string;
+  userId: string;
   category: string;
   services: string[];
 }
 
-const BusinessSidebarModal: FC<BusinessSidebarModalProps> = ({
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const BusinessSidebarModal = ({
   isOpen,
   onClose,
-  appointmentId,
+  userId,
   category,
   services,
-}) => {
+}: BusinessSidebarModalProps) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
-  const [userId, setUserId] = useState<string>("");
-
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<
+    "success" | "error" | "warning"
+  >("success");
 
   const handleDateChange = (newDate: Dayjs | null) => {
     setSelectedDate(newDate);
-    setSelectedTime(null);
+  };
+
+  const handleTimeChange = (newTime: Dayjs | null) => {
+    setSelectedTime(newTime);
   };
 
   const handleReserveTime = async () => {
     if (selectedDate && selectedTime) {
-      if (userId) {
-        try {
-          const createdAppointment = await createAppointment(
-            userId,
-            selectedDate.format("YYYY-MM-DD"),
-            selectedTime.format("HH:mm"),
-            true,
-            category,
-            services
-          );
-          console.log("Appointment created:", createdAppointment);
+      setLoading(true);
+      try {
+        const response = await createAppointment(
+          userId,
+          selectedDate.format("YYYY-MM-DD"),
+          selectedTime.format("HH:mm"),
+          category,
+          services
+        );
+
+        // Check if the response has the expected fields
+        if (response && response._id) {
+          setSnackbarMessage("Appointment successfully created!");
+          setSnackbarSeverity("success");
           onClose();
-        } catch (error) {
-          console.error("Error creating appointment:", error);
-          alert("Failed to create appointment.");
+        } else {
+          setSnackbarMessage("Error creating appointment. Please try again.");
+          setSnackbarSeverity("error");
         }
-      } else {
-        alert("User not logged in.");
+      } catch (error) {
+        setSnackbarMessage("Error creating appointment. Please try again.");
+        setSnackbarSeverity("error");
+      } finally {
+        setLoading(false);
+        setSnackbarOpen(true);
       }
     } else {
-      alert("Please select both date and time!");
+      setSnackbarMessage("Please select both date and time.");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
     }
   };
-
-  const generateTimeSlots = (selectedDate: Dayjs | null) => {
-    const timeSlots = [];
-    const now = dayjs();
-    const startHour = selectedDate?.isSame(now, "day") ? now.hour() + 1 : 0;
-
-    for (let i = startHour; i < 24; i++) {
-      timeSlots.push(dayjs().hour(i).minute(0));
-    }
-
-    return timeSlots;
-  };
-
-  const timeSlots = generateTimeSlots(selectedDate);
 
   return (
-    <Drawer anchor="right" open={isOpen} onClose={onClose}>
-      <Box sx={{ width: 400, p: 2 }}>
-        <div className={styles.top}>
+    <>
+      <Drawer anchor="right" open={isOpen} onClose={onClose}>
+        <Box sx={{ width: 400, p: 2 }}>
           <Typography variant="h6" sx={{ textAlign: "center", mt: 2 }}>
             Book an Appointment
           </Typography>
-          <IoMdClose className={styles.closeButton} onClick={onClose} />
-        </div>
-        <span className={styles.text}>
-          Select Date and Time slot to book an appointment
-        </span>
-        <div className={styles.dateWrapper}>
-          <span className={styles.heading}>Select Date</span>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              value={selectedDate}
-              onChange={handleDateChange}
-              minDate={dayjs()}
-            />
-          </LocalizationProvider>
-        </div>
-        <div className={styles.timeWrapper}>
-          <span className={styles.heading}>Select Time Slot</span>
-          <Box
-            display="flex"
-            flexWrap="wrap"
-            gap={1}
-            className={styles.timeSlots}
+          <DatePicker value={selectedDate} onChange={handleDateChange} />
+          <TimePicker
+            value={selectedTime}
+            onChange={handleTimeChange}
+            unavailableTimes={[]}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={handleReserveTime}
+            sx={{ mt: 2 }}
+            disabled={!selectedDate || !selectedTime || loading}
           >
-            {timeSlots.map((timeSlot, index) => (
-              <Chip
-                key={index}
-                label={timeSlot.format("HH:mm")}
-                variant={
-                  selectedTime && selectedTime.isSame(timeSlot, "hour")
-                    ? "filled"
-                    : "outlined"
-                }
-                onClick={() => setSelectedTime(timeSlot)}
-              />
-            ))}
-          </Box>
-        </div>
-        <Button
-          variant="contained"
-          sx={{ mt: 2 }}
-          onClick={handleReserveTime}
-          className={styles.bookButton}
-          disabled={!selectedDate || !selectedTime}
+            {loading ? "Reserving..." : "Reserve Time"}
+          </Button>
+        </Box>
+      </Drawer>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarSeverity}
         >
-          Reserve Time
-        </Button>
-      </Box>
-    </Drawer>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 

@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <>
-      <Hero setSearchResults={setSearchResults} />
+      <Hero />
       {Array.isArray(searchResults) && searchResults.length > 0 ? (
         <div className={styles.businessContainer}>
           {searchResults.map((item, index) => (

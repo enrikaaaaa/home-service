@@ -21,24 +21,28 @@ export const addTime = (id: string, time: string) =>
 export const fetchBusinessById = (id: string) =>
   axiosInstance.get(`/services/${id}`).then((response) => response.data);
 
-export const createAppointment = (
+export const createAppointment = async (
   userId: string,
-  selectedDate: string,
-  selectedTime: string,
-  reserved: boolean,
+  date: string,
+  time: string,
   category: string,
   services: string[]
-) =>
-  axiosInstance
-    .post<Appointment>("/appointments", {
+) => {
+  try {
+    const response = await axiosInstance.post("/appointments", {
       userId,
-      date: selectedDate,
-      time: selectedTime,
-      reserved,
+      date,
+      time,
+      reserved: true,
       category,
       services,
-    })
-    .then((response) => response.data);
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating appointment:", error);
+    throw error;
+  }
+};
 
 export const fetchAppointmentsByUserId = (userId: string) =>
   axiosInstance
@@ -61,19 +65,8 @@ export const fetchSimilarBusinesses = (category: string) =>
     .get(`/services/category/${category}`)
     .then((response) => response.data);
 
-export async function searchBusinesses(query: string): Promise<Appointment[]> {
-  try {
-    const response = await fetch(`/businesses?query=${query}`);
-    const data = await response.json();
-    // Ensure the data is an array
-    if (Array.isArray(data)) {
-      return data;
-    } else {
-      console.error("Invalid data format received from API:", data);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching data from API:", error);
-    return [];
-  }
-}
+export const searchBusinesses = async (query: string): Promise<Business[]> => {
+  const response = await axiosInstance.get(`/businesses/search?q=${query}`);
+
+  return response.data;
+};
